@@ -1,0 +1,40 @@
+{
+  "name": "sguard-bot",
+  "version": "1.0.0",
+  "description": "Bot de seguridad para Discord usando discordx y TypeScript",
+  "main": "dist/bot.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --loader ts-node/esm/transpile-only src/bot.ts",
+    "watch": "nodemon --exec npm run dev --watch src --ext ts",
+    "build": "tsc",
+    "start": "node dist/bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielvflores/sguard-bot.git"
+  },
+  "keywords": [],
+  "author": "Daniel Flores",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielvflores/sguard-bot/issues"
+  },
+  "homepage": "https://github.com/danielvflores/sguard-bot#readme",
+  "dependencies": {
+    "@discordx/importer": "^1.3.3",
+    "discord.js": "^14.21.0",
+    "discordx": "^11.12.5",
+    "dotenv": "^17.2.1",
+    "nodemon": "^3.1.10",
+    "path": "^0.12.7",
+    "reflect-metadata": "^0.2.2",
+    "url": "^0.11.4"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  }
+}
