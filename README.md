@@ -11,7 +11,7 @@
 
 <p align="center">
   <b>Stack:</b> <code>TypeScript</code> · <code>MongoDB</code> · <code>discordx</code> · <code>discord.js</code> <br>
-  <b>Hosts:</b> <code>Railway</code> <br>
+  <b>Hosts:</b> <code>Vercel</code> · <code>Railway</code> <br>
   <b>Paths:</b> <code>sguard-bot</code> · <code>sguard-api</code> · <code>sguard-frontend</code>
 </p>
 
