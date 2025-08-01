@@ -5,5 +5,5 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export async function loadCommands() {
-    await importx(path.resolve(__dirname, "../command/**/*.{ts,js}"));
+    await importx(path.resolve(__dirname, "../../command/**/*.{ts,js}"));
 }
