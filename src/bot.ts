@@ -4,6 +4,7 @@ import { config } from "dotenv";
 import { setBotStatus } from "./bot/status.js";
 import { loadCommands } from "./utils/global/loadCommands.js";
 import type { Interaction } from "discord.js";
+import { loadEvents } from "./utils/global/loadEvents.js";
 
 config();
 
@@ -26,6 +27,7 @@ client.on("interactionCreate", async (interaction: Interaction) => {
 
 async function run() {
   await loadCommands();
+  await loadEvents();
   setBotStatus(client);
   if (!process.env.BOT_TOKEN) {
     throw new Error("❌ BOT_TOKEN no definido en el archivo .env");
