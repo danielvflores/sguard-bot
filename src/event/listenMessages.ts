@@ -22,7 +22,7 @@ export class ListenMessages {
       content: message.content,
       timestamp: message.createdTimestamp
     };
-    if (analyzeMessage(log)) {
+    if (await analyzeMessage(log)) {
       console.log("Mensaje ofensivo detectado:", log);
     }
   }
