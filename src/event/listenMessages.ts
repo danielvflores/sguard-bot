@@ -2,6 +2,7 @@ import { Discord, On, Guard, type ArgsOf } from "discordx";
 import type { Message, PartialMessage } from "discord.js";
 import { NotBot } from "@discordx/utilities";
 import { analyzeMessage } from "../utils/auto/analyzeMessage.js";
+import { handleToxicMessage } from "../utils/auto/autoModeration.js"
 
 @Discord()
 export class ListenMessages {
@@ -26,9 +27,7 @@ export class ListenMessages {
     if (analysis.isToxic) {
       const logWithScore = { ...log, score: analysis.score };
       console.log("Mensaje ofensivo detectado:", logWithScore);
-      
-      // Next Step: Llamar a autoModeration aquí
-      // await autoModeration.handleToxicMessage(message, analysis.score);
+      await handleToxicMessage(message, analysis.score);
     }
   }
 }
