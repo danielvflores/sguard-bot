@@ -7,7 +7,10 @@ const manualTranslations: Record<string, string> = {
   "estúpido": "stupid", "estupido": "stupid", "pendejo": "asshole", "mamón": "asshole",
   "mamon": "asshole", "maldito": "damn", "pinche": "fucking", "hijo de puta": "son of a bitch",
   "hija de puta": "daughter of a bitch", "vete a la mierda": "go to hell",
-  "que te jodan": "fuck you", "te voy a matar": "i will kill you"
+  "que te jodan": "fuck you", "te voy a matar": "i will kill you",
+  "tonto": "silly", "tonta": "silly", "tontito": "silly", "tontita": "silly",
+  "bobo": "silly", "boba": "silly", "bobito": "silly", "bobita": "silly",
+  "loco": "crazy", "loca": "crazy", "loquito": "crazy", "loquita": "crazy"
 };
 
 const isSpanish = (text: string): boolean => {
@@ -83,6 +86,9 @@ const analyzeContext = async (text: string): Promise<{ isToxic: boolean; score: 
   
   const translatedText = await translateToEnglish(text);
   
+  const affectionateContext = /\b(amor|mi amor|cariño|bebé|baby|corazón|linda|lindo|hermosa|hermoso|querido|querida)\b/i;
+  const isAffectionate = affectionateContext.test(text.toLowerCase());
+  
   try {
     const res = await fetch("https://api-inference.huggingface.co/models/unitary/toxic-bert", {
       method: "POST",
@@ -103,7 +109,13 @@ const analyzeContext = async (text: string): Promise<{ isToxic: boolean; score: 
       item.label?.toLowerCase().match(/toxic|hate|insult|threat/)
     );
     
-    const maxScore = Math.max(...toxicCategories.map((cat: any) => cat.score));
+    let maxScore = Math.max(...toxicCategories.map((cat: any) => cat.score));
+    
+    if (isAffectionate && maxScore < 0.7) {
+      maxScore = maxScore * 0.3;
+      console.log(`[Context] Contexto cariñoso detectado, score ajustado: ${maxScore.toFixed(3)}`);
+    }
+    
     const isToxic = maxScore > 0.15;
     
     console.log(`[Analysis] "${translatedText}" -> ${isToxic ? 'TÓXICO' : 'SEGURO'} (${maxScore.toFixed(3)})`);
