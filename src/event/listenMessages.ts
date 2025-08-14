@@ -26,8 +26,9 @@ export class ListenMessages {
     if (analysis.isToxic) {
       const logWithScore = { ...log, score: analysis.score };
       console.log("Mensaje ofensivo detectado:", logWithScore);
-      // Responder en el canal donde se envió el mensaje ofensivo
-      await message.reply("⚠️ **OFENSIVO** - Mensaje detectado como tóxico por el sistema de moderación.");
+      
+      // Next Step: Llamar a autoModeration aquí
+      // await autoModeration.handleToxicMessage(message, analysis.score);
     }
   }
 }
