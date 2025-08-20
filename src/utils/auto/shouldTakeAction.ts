@@ -1,4 +1,4 @@
-import { logOnly, notify, warn, muteMedium, muteHeavy } from "./modActions.js";
+import { logOnly, notify, warn, muteMedium, muteStrict } from "./modActions.js";
 import type { Message } from "discord.js";
 
 type ModerationAction = (message: Message) => Promise<void>;
@@ -18,7 +18,7 @@ export const shouldTakeAction = (
       if (score >= 0.2) return { shouldAct: true, action: notify, category: "MEDIO" };
       return { shouldAct: false, category: "BAJO" };
     case "strict":
-      if (score >= 0.5) return { shouldAct: true, action: muteHeavy, category: "CRÍTICO" };
+      if (score >= 0.5) return { shouldAct: true, action: muteStrict, category: "CRÍTICO" };
       if (score >= 0.3) return { shouldAct: true, action: muteMedium, category: "ALTO" };
       if (score >= 0.15) return { shouldAct: true, action: warn, category: "MEDIO" };
       return { shouldAct: false, category: "BAJO" };
