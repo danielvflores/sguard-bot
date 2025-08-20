@@ -37,7 +37,6 @@ const getModerationLevel = async (guildId: string): Promise<ModerationConfig> =>
 export const handleToxicMessage = async (message: Message, score: number): Promise<void> => {
   if (!message.guild) return;
 
-  // ...obtén config...
   const config = await getModerationLevel(message.guild.id);
   const decision = shouldTakeAction(score, config.level);
 

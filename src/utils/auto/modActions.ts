@@ -1,7 +1,8 @@
-import type { Message } from "discord.js";
+import type { CommandInteraction, Message } from "discord.js";
+import { applySanction } from "../sanctions/sanctionActions.js";
+import type { MinimalInteraction } from "./autoTypes.js";
 
 export const logOnly = async (message: Message) => {
-  // Solo loguea el mensaje
   console.log(`[AutoMod][LOG_ONLY] Guild: ${message.guild?.name} | User: ${message.author.tag} | Message: ${message.content}`);
 };
 
@@ -15,12 +16,31 @@ export const warn = async (message: Message) => {
 
 export const muteMedium = async (message: Message) => {
   await message.reply("🔇 **Mensaje inapropiado** - Contenido removido por moderación automática.");
-  // TODO: Implementar mute temporal si se desea
+  const member = message.member;
+  if (member && message.guild) {
+    const interaction: MinimalInteraction = {
+      guild: message.guild,
+      user: message.client.user,
+      replied: false,
+      deferred: false,
+      reply: async () => {},
+    };
+    await applySanction("mute", member, "AutoMod: contenido inapropiado", interaction, message.client, "10m");
+  }
 };
 
 export const muteHeavy = async (message: Message) => {
   await message.reply("🚨 **Contenido extremo** - Usuario sancionado por violación grave.");
-  // TODO: Implementar mute largo si se desea
+  const member = message.member;
+  if (member && message.guild) {
+    await applySanction("mute", member, "AutoMod: contenido extremo", {
+      guild: message.guild,
+      user: message.client.user,
+      replied: false,
+      deferred: false,
+      reply: async () => {},
+    } as unknown as CommandInteraction, message.client, "1h");
+  }
 };
 
 export const selectSanction = (action: string) => {
