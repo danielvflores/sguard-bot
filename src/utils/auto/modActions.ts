@@ -23,7 +23,7 @@ export const muteMedium = async (message: Message) => {
       user: message.client.user,
       replied: false,
       deferred: false,
-      reply: async () => {},
+      reply: async () => { },
     };
     await applySanction("mute", member, "AutoMod: contenido inapropiado", interaction, message.client, "10m");
   }
@@ -38,7 +38,7 @@ export const muteHeavy = async (message: Message) => {
       user: message.client.user,
       replied: false,
       deferred: false,
-      reply: async () => {},
+      reply: async () => { },
     } as unknown as CommandInteraction, message.client, "1h");
   }
 };
@@ -50,6 +50,6 @@ export const selectSanction = (action: string) => {
     case "WARNING": return warn;
     case "MUTE_MEDIUM": return muteMedium;
     case "MUTE_HEAVY": return muteHeavy;
-    default: return async () => {return console.warn("Acción no reconocida:", action); };
+    default: return async () => { return console.warn("Acción no reconocida:", action); };
   }
 };
