@@ -1,6 +1,7 @@
 import { CommandInteraction, GuildMember, Client } from "discord.js";
 import { createEmbed, EmbedColor } from "../global/createEmbeds.js";
 import { parseDuration } from "../global/parseDuration.js";
+import type { MinimalInteraction } from "../auto/autoTypes.js";
 
 const sanctionHandlers = {
     kick: async (user: GuildMember, reason?: string) => user.kick(reason),
@@ -17,30 +18,30 @@ const sanctionVerbs: Record<SanctionType, string> = {
 };
 
 export async function applySanction(
-    action: "kick" | "ban",
-    user: GuildMember,
-    reason: string | undefined,
-    interaction: CommandInteraction,
-    client: Client
+  action: "kick" | "ban",
+  user: GuildMember,
+  reason: string | undefined,
+  interaction: CommandInteraction | MinimalInteraction,
+  client: Client
 ): Promise<void>;
 
 export async function applySanction(
-    action: "mute",
-    user: GuildMember,
-    reason: string | undefined,
-    interaction: CommandInteraction,
-    client: Client,
-    time: string
+  action: "mute",
+  user: GuildMember,
+  reason: string | undefined,
+  interaction: CommandInteraction | MinimalInteraction,
+  client: Client,
+  time: string
 ): Promise<void>;
 
 export async function applySanction(
-    action: SanctionType,
-    user: GuildMember,
-    reason: string | undefined,
-    interaction: CommandInteraction,
-    client: Client,
-    time?: string
-)
+  action: "kick" | "ban" | "mute",
+  user: GuildMember,
+  reason: string | undefined,
+  interaction: CommandInteraction | MinimalInteraction,
+  client: Client,
+  time?: string
+): Promise<void>
 
 {
     const verb = sanctionVerbs[action];
